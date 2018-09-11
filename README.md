@@ -11,3 +11,5 @@ https://github.com/zxw018018/myBlog/issues/3
 https://github.com/zxw018018/myBlog/issues/4
 ### String
 https://github.com/zxw018018/myBlog/issues/5
+### Linked List
+https://github.com/zxw018018/myBlog/issues/6
