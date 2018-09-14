@@ -13,5 +13,5 @@ https://github.com/zxw018018/myBlog/issues/4
 https://github.com/zxw018018/myBlog/issues/5
 ### Linked List
 https://github.com/zxw018018/myBlog/issues/6
-### Queue
+### Queue and Stack
 https://github.com/zxw018018/myBlog/issues/7
