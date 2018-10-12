@@ -19,4 +19,18 @@ https://github.com/zxw018018/myBlog/issues/7
 https://github.com/zxw018018/myBlog/issues/9
 ### Sort
 https://github.com/zxw018018/myBlog/issues/10
+### Dynamic Programming
+https://github.com/zxw018018/myBlog/issues/8
+### Search
+https://github.com/zxw018018/myBlog/issues/14
+### Enumeration
+https://github.com/zxw018018/myBlog/issues/16
 ## React
+### Props and State
+https://github.com/zxw018018/myBlog/issues/11
+### Virtual DOM, Events, and Forms
+https://github.com/zxw018018/myBlog/issues/12
+### Component Lifecycle
+https://github.com/zxw018018/myBlog/issues/13
+### Redux
+https://github.com/zxw018018/myBlog/issues/15
