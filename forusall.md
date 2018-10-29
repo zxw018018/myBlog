@@ -1,9 +1,12 @@
 ## [calculator](#+-())
-
+## [stack](#min-stack) 
 
 ### [+-()](#calculator-1) 
 ### [+-*/](#calculator-2)          
 ### [+-*/()](#calculator-3)
+### [min stack](#min-stack)
+### [max stack](#max-stack)
+### [Implement queue using stacks](#implement-queue-using-stacks)
 
 #### calculator 1
 `+-()`
@@ -135,6 +138,123 @@ class Solution {
         }
 
         return (res1 + op1 * res2);
+    }
+}
+```
+
+#### min stack
+```java
+class MinStack {
+    private Stack<Integer> stack;
+    private Stack<Integer> minStack;
+    
+    /** initialize your data structure here. */
+    public MinStack() {
+        stack = new Stack<>();
+        minStack = new Stack<>();
+    }
+    
+    public void push(int x) {
+        stack.push(x);
+        int minVal = minStack.isEmpty()? x: Math.min(minStack.peek(), x);
+        minStack.push(minVal);
+        
+    }
+    
+    public void pop() {
+        stack.pop();
+        minStack.pop();
+    }
+    
+    public int top() {
+        return stack.peek();
+    }
+    
+    public int getMin() {
+        return minStack.peek();
+    }
+}
+```
+
+#### max stack
+```java
+class MaxStack {
+    private Stack<Integer> stack;
+    private Stack<Integer> maxStack;
+
+    public MaxStack() {
+        stack = new Stack<>();
+        maxStack = new Stack<>();
+    }
+    
+    public void push(int x) {
+        int max = maxStack.isEmpty() ? x : maxStack.peek();
+        maxStack.push(max > x ? max : x);
+        stack.push(x);
+    }
+    
+    public int pop() {
+        maxStack.pop();
+        return stack.pop();
+    }
+    
+    public int top() {
+        return stack.peek();
+    }
+    
+    public int peekMax() {
+        return maxStack.peek();
+    }
+    
+    public int popMax() {
+        int max = peekMax();
+        Stack<Integer> buffer = new Stack<>();
+        while (top() != max) buffer.push(pop());
+        pop();
+        while (!buffer.isEmpty()) push(buffer.pop());
+        return max;
+    }
+}
+```
+
+#### Implement queue using stacks
+```java
+class MyQueue {
+    private Stack<Integer> s;
+    private Stack<Integer> tmp;
+
+    /** Initialize your data structure here. */
+    public MyQueue() {
+        s = new Stack<>();
+        tmp = new Stack<>();
+    }
+    
+    /** Push element x to the back of queue. */
+    public void push(int x) {
+        while (!s.isEmpty()) {
+            int item = s.pop();
+            tmp.push(item);
+        }
+        s.push(x);
+        while (!tmp.isEmpty()) {
+            int item = tmp.pop();
+            s.push(item);
+        }
+    }
+    
+    /** Removes the element from in front of queue and returns that element. */
+    public int pop() {
+        return s.pop();
+    }
+    
+    /** Get the front element. */
+    public int peek() {
+        return s.peek();
+    }
+    
+    /** Returns whether the queue is empty. */
+    public boolean empty() {
+        return s.isEmpty();
     }
 }
 ```
