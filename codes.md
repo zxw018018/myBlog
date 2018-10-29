@@ -1,5 +1,5 @@
 ## [calculator](#+-())
-## [stack](#min-stack) 
+## [stack](#min_stack) 
 
 ### [+-()](#calculator-1) 
 ### [+-*/](#calculator-2)          
