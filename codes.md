@@ -1,5 +1,6 @@
 ## [calculator](#+-())
 ## [stack](#min_stack) 
+## [BST](#closest_binary_search_tree_value)
 
 ### [+-()](#calculator-1) 
 ### [+-*/](#calculator-2)          
@@ -7,6 +8,8 @@
 ### [min_stack](#min-stack)
 ### [max_stack](#max-stack)
 ### [implement_queue_using_stacks](#implement-queue-using-stacks)
+### [closest_binary_search_tree_value](#closest-binary-search-tree-value)
+### [closest_binary_search_tree_value_II](#closest-binary-search-tree-value-II)
 
 #### calculator 1
 `+-()`
@@ -255,6 +258,48 @@ class MyQueue {
     /** Returns whether the queue is empty. */
     public boolean empty() {
         return s.isEmpty();
+    }
+}
+```
+
+#### Closest Binary Search Tree Value
+```java
+class Solution {
+    public int closestValue(TreeNode root, double target) {
+        int res = root.val;   
+        while (root != null) {
+            if (Math.abs(target - root.val) < Math.abs(target - res)) {
+                res = root.val;
+            }      
+            root = root.val > target ? root.left : root.right;
+        }     
+        return res;      
+    }    
+}
+```
+
+#### Closest Binary Search Tree Value II
+```java
+class Solution {
+    public List<Integer> closestKValues(TreeNode root, double target, int k) {
+        Deque<Integer> deque = new LinkedList<>();
+        
+        inorder(root, deque);
+        while (deque.size() > k) {
+            if (Math.abs(deque.peekFirst() - target) > Math.abs(deque.peekLast() - target))
+                deque.pollFirst();
+            else 
+                deque.pollLast();
+        }
+        
+        return new ArrayList<Integer>(deque);
+    }
+    
+    public void inorder(TreeNode root, Deque<Integer> deque) {
+        if (root == null) return;
+        inorder(root.left, deque);
+        deque.add(root.val);
+        inorder(root.right, deque);
     }
 }
 ```
