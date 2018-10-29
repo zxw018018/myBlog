@@ -4,9 +4,9 @@
 ### [+-()](#calculator-1) 
 ### [+-*/](#calculator-2)          
 ### [+-*/()](#calculator-3)
-### [min stack](#min-stack)
-### [max stack](#max-stack)
-### [Implement queue using stacks](#implement-queue-using-stacks)
+### [min-stack](#min-stack)
+### [max-stack](#max-stack)
+### [implement-queue-using-stacks](#implement-queue-using-stacks)
 
 #### calculator 1
 `+-()`
