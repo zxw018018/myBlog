@@ -41,7 +41,7 @@ class Solution {
 }
 ```
 
-### calculator 2
+#### calculator 2
 `+-*/`
 ```java
 class Solution {
@@ -83,7 +83,7 @@ class Solution {
     }
 }
 ```
-### calculator 3
+#### calculator 3
 `+-*/()`
 ```java
 class Solution {
