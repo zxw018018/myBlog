@@ -13,6 +13,8 @@
 ### [closest_binary_search_tree_value_II](#closest-binary-search-tree-value-II)
 ### [insert_into_a_binary_search_tree](#insert-into-a-binary-search-tree)
 ### [delete_node_in_a_BST](#delete-node-in-a-BST)
+### [BST_iterator](#bst-iterator)
+### [Zigzag_iterator](#zigzag-iterator)
 
 #### calculator 1
 `+-()`
@@ -366,4 +368,59 @@ class Solution {
 ```
 [Top](#forusall)
 
+#### BST Iterator
+```java
+public class BSTIterator {
+    private Stack<TreeNode> s = new Stack<>();
 
+    public BSTIterator(TreeNode root) {
+        pushAll(root);
+    }
+
+    /** @return whether we have a next smallest number */
+    public boolean hasNext() {
+        return !s.isEmpty();
+    }
+
+    /** @return the next smallest number */
+    public int next() {
+        TreeNode tmp = s.pop();
+        pushAll(tmp.right);
+        return tmp.val;
+    }
+    
+    private void pushAll(TreeNode node) {
+        while (node != null) {
+            s.push(node);
+            node = node.left;
+        }
+    }
+}
+```
+[Top](#forusall)
+
+### Zigzag iterator
+```java
+public class ZigzagIterator {
+    private Queue<Iterator<Integer>> queue; 
+    
+    public ZigzagIterator(List<Integer> v1, List<Integer> v2) {
+        queue = new LinkedList<Iterator<Integer>> ();
+        if (v1.iterator().hasNext()) 
+            queue.offer(v1.iterator());
+        if (v2.iterator().hasNext()) 
+            queue.offer(v2.iterator());
+    }
+
+    public int next() {
+        Iterator<Integer> next = queue.poll();
+        int res = next.next();
+        if (next.hasNext()) queue.offer(next);
+        return res;
+    }
+
+    public boolean hasNext() {
+        return !queue.isEmpty();
+    }
+}
+```
