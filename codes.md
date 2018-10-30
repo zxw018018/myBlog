@@ -22,6 +22,7 @@
 ### [design_snake_game](#design-snake-game)
 ### [number_of_connected_components_in_a_undirected_graph](#number-of-connected-components-in-a-undirected-graph)
 ### [graph_valid_tree](#graph-valid-tree)
+### [exam_room](#exam-room)
 
 #### calculator 1
 `+-()`
@@ -641,3 +642,45 @@ class Solution {
 ```
 [Top](#forusall)
 
+#### exam room
+```java
+class ExamRoom {
+    int N;
+    TreeSet<Integer> students;
+
+    public ExamRoom(int N) {
+        this.N = N;
+        students = new TreeSet();
+    }
+
+    public int seat() {
+        int student = 0;
+        if (students.size() > 0) {
+            int maxDis = students.first();
+            Integer prev = null;
+            for (Integer s: students) {
+                if (prev != null) {
+                    int d = (s - prev) / 2;
+                    if (d > maxDis) {
+                        maxDis = d;
+                        student = prev + d;
+                    }
+                }
+                prev = s;
+            }
+
+            //Considering the right-most seat.
+            if (N - 1 - students.last() > maxDis)
+                student = N - 1;
+        }
+
+        students.add(student);
+        return student;
+    }
+
+    public void leave(int p) {
+        students.remove(p);
+    }
+}
+```
+[Top](#forusall)
