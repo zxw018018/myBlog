@@ -39,7 +39,7 @@
 ### [multiply_strings](#multiply-strings)
 ### [Find_All_Anagrams_in_a_String](#Find-All-Anagrams-in-a-String)
 ### [Group_Anagrams](#Group-Anagrams)
-### [Minimum ASCII Delete Sum](#Minimum-ASCII-Delete-Sum)
+### [Minimum ASCII Delete Sum](#minimum-ascii-delete-sum)
 
 #### calculator 1
 `+-()`
@@ -1070,6 +1070,7 @@ public class Solution {
     }
 }
 ```
+[Top](#forusall)
 
 ### Group Anagrams
 ```java
