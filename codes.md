@@ -39,7 +39,7 @@
 ### [multiply_strings](#multiply-strings)
 ### [Find_All_Anagrams_in_a_String](#Find-All-Anagrams-in-a-String)
 ### [Group_Anagrams](#Group-Anagrams)
-### [Minimum ASCII Delete Sum](#minimum-ascii-delete-sum)
+### [minimum_ASCII_Delete_Sum](#minimum-ascii-delete-sum)
 
 #### calculator 1
 `+-()`
