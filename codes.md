@@ -9,6 +9,7 @@
 ## [excel](#excel_sheet_column_number)
 ## [random](#insert_delete_getrandom)
 ## [string](#multiply_strings)
+## [array](#longest_mountain_in_array)
 
 ### [+-()](#calculator-1) 
 ### [+-*/](#calculator-2)          
@@ -40,6 +41,13 @@
 ### [Find_All_Anagrams_in_a_String](#Find-All-Anagrams-in-a-String)
 ### [Group_Anagrams](#Group-Anagrams)
 ### [minimum_ASCII_Delete_Sum](#minimum-ascii-delete-sum)
+### [longest_mountain_in_array](#longest-mountain-in-array)
+### [Continuous_Subarray_Sum](#Continuous-Subarray-Sum)
+### [Maximum_Subarray](#Maximum-Subarray)
+### [Find_the_Duplicate_Number](#Find-the-Duplicate-Number)
+### [Max_Chunks_To_Make_Sorted_II](#Max-Chunks-To-Make-Sorted-II)
+### [Maximum_Gap](#Maximum-Gap)
+### [Sliding_Window_Maximum](#Sliding-Window-Maximum)
 
 #### calculator 1
 `+-()`
@@ -1128,5 +1136,220 @@ class Solution {
         return dp[m][n];
     }
 }
+```
+[Top](#forusall)
+
+### longest mountain in array
+```java
+class Solution {
+    public int longestMountain(int[] A) {
+        int max = 0;
+        int i = 1;
+        int len = A.length;
+        while (i < len) {
+            while (i < len && A[i-1] == A[i])
+                ++i;
+            
+            int up = 0;
+            while (i < len && A[i-1] < A[i]) {
+                ++up;
+                ++i;
+            }
+            
+            int down = 0;
+            while (i < len && A[i-1] > A[i]) {
+                ++down;
+                ++i;
+            }
+            
+            if (up > 0 && down > 0) 
+                max = Math.max(max, up + down + 1);
+        }
+        return max;
+    }
+}
+```
+[Top](#forusall)
+
+### continuous subarray sum
+```java
+public class Solution {
+    public boolean checkSubarraySum(int[] nums, int k) {
+        int sum = 0;
+        HashMap < Integer, Integer > map = new HashMap < > ();
+        map.put(0, -1);
+        for (int i = 0; i < nums.length; i++) {
+            sum += nums[i];
+            if (k != 0)
+                sum = sum % k;
+            if (map.containsKey(sum)) {
+                if (i - map.get(sum) > 1)
+                    return true;
+            } else
+                map.put(sum, i);
+        }
+        return false;
+    }
+}
+```
+[Top](#forusall)
+
+### Maximum Subarray
+```java
+class Solution {
+    public int maxSubArray(int[] nums) {
+        int maxLocal = nums[0];
+        int global = nums[0];
+        for (int i = 1; i < nums.length; i++) {
+            maxLocal = Math.max(nums[i], nums[i] + maxLocal);
+            global = Math.max(maxLocal, global);
+        }
+        return global;
+    }
+}
+```
+[Top](#forusall)
+
+### Find the Duplicate Number
+```java
+class Solution {
+    public int findDuplicate(int[] nums) {
+        // Find the intersection point of the two runners.
+        int tortoise = nums[0];
+        int hare = nums[0];
+        do {
+            tortoise = nums[tortoise];
+            hare = nums[nums[hare]];
+        } while (tortoise != hare);
+
+        // Find the "entrance" to the cycle.
+        int ptr1 = nums[0];
+        int ptr2 = tortoise;
+        while (ptr1 != ptr2) {
+            ptr1 = nums[ptr1];
+            ptr2 = nums[ptr2];
+        }
+
+        return ptr1;
+    }
+}
+```
+[Top](#forusall)
+
+### Max Chunks To Make Sorted II
+```java
+class Solution {
+    public int maxChunksToSorted(int[] arr) {
+        Map<Integer, Integer> count = new HashMap();
+        int ans = 0, nonzero = 0;
+
+        int[] expect = arr.clone();
+        Arrays.sort(expect);
+
+        for (int i = 0; i < arr.length; ++i) {
+            int x = arr[i], y = expect[i];
+
+            count.put(x, count.getOrDefault(x, 0) + 1);
+            if (count.get(x) == 0) nonzero--;
+            if (count.get(x) == 1) nonzero++;
+
+            count.put(y, count.getOrDefault(y, 0) - 1);
+            if (count.get(y) == -1) nonzero++;
+            if (count.get(y) == 0) nonzero--;
+
+            if (nonzero == 0) ans++;
+        }
+
+        return ans;
+    }
+}
+```
+[Top](#forusall)
+
+### Maximum Gap
+```java
+class Solution {
+    public int maximumGap(int[] nums) {
+        if (nums.length < 2) return 0;
+        radixSort(nums);
+        int maxDiff = Integer.MIN_VALUE;
+        for (int i = 0; i < nums.length - 1; i++) {
+            maxDiff = Math.max(maxDiff, nums[i+1] - nums[i]);
+        }
+        return maxDiff;
+    }
+    
+    private void radixSort(int[] nums) {
+        int maxNum = Integer.MIN_VALUE;
+        int minNum = Integer.MAX_VALUE;
+        // find max and min 
+        for (int x : nums) {
+            maxNum = Math.max(maxNum, x);
+            minNum = Math.min(minNum, x);
+        }
+        int diff = maxNum - minNum;
+        int diffNum = Integer.toString(diff).length();
+        // create 10 buckets
+        ArrayList<Integer>[] buckets = new ArrayList[10];
+        for (int i = 0; i < 10; i++) {
+            buckets[i] = new ArrayList<>();
+        }
+        
+        
+        for (int i = 0; i < diffNum; i++) {
+            for (int x: nums) {
+                int index = getDigit(x - minNum, i);
+                ArrayList<Integer> bucket = buckets[index];
+                bucket.add(x);
+            }
+            
+            int index = 0;
+            for (ArrayList<Integer> bucket: buckets) {
+                for (int x: bucket) {
+                    nums[index++] = x;
+                }
+                bucket.clear();
+            }
+        }
+    }
+    
+    private int getDigit(int n, int i) {
+        for (int j = 0; j < i; j++) {
+            n /= 10;
+        }
+        return n % 10;
+    }
+}
+```
+[Top](#forusall)
+
+### sliding window maximum
+```java
+public int[] maxSlidingWindow(int[] a, int k) {		
+		if (a == null || k <= 0) {
+			return new int[0];
+		}
+		int n = a.length;
+		int[] r = new int[n-k+1];
+		int ri = 0;
+		// store index
+		Deque<Integer> q = new ArrayDeque<>();
+		for (int i = 0; i < a.length; i++) {
+			// remove numbers out of range k
+			while (!q.isEmpty() && q.peek() < i - k + 1) {
+				q.poll();
+			}
+			// remove smaller numbers in k range as they are useless
+			while (!q.isEmpty() && a[q.peekLast()] < a[i]) {
+				q.pollLast();
+			}
+			// q contains index... r contains content
+			q.offer(i);
+			if (i >= k - 1) {
+				r[ri++] = a[q.peek()];
+			}
+		}
+		return r;
+	}
 ```
 [Top](#forusall)
