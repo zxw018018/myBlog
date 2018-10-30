@@ -2,6 +2,7 @@
 ## [calculator](#+-())
 ## [stack](#min_stack) 
 ## [BST](#closest_binary_search_tree_value)
+## [game](#tic_tac_toe)
 
 ### [+-()](#calculator-1) 
 ### [+-*/](#calculator-2)          
@@ -15,6 +16,8 @@
 ### [delete_node_in_a_BST](#delete-node-in-a-BST)
 ### [BST_iterator](#bst-iterator)
 ### [Zigzag_iterator](#zigzag-iterator)
+### [binary_tree_preorder](#binary-tree-preorder-traversal)
+### [tic_tac_toe](#tic-tac-toe)
 
 #### calculator 1
 `+-()`
@@ -399,7 +402,7 @@ public class BSTIterator {
 ```
 [Top](#forusall)
 
-### Zigzag iterator
+#### Zigzag iterator
 ```java
 public class ZigzagIterator {
     private Queue<Iterator<Integer>> queue; 
@@ -424,3 +427,84 @@ public class ZigzagIterator {
     }
 }
 ```
+[Top](#forusall)
+
+#### Binary tree preorder traversal
+```java
+class Solution {
+    public List<Integer> preorderTraversal(TreeNode root) {
+        List<Integer> res = new ArrayList<>();
+        Stack<TreeNode> s = new Stack<>();
+        if (root != null) s.push(root);
+        while (!s.isEmpty()) {
+            TreeNode cur = s.pop();
+            res.add(cur.val);
+            if (cur.right != null) s.push(cur.right);
+            if (cur.left != null) s.push(cur.left);
+        }
+        return res;
+    }
+}
+
+class Solution {
+    public List<Integer> preorderTraversal(TreeNode root) {
+        List<Integer> res = new ArrayList<>();
+        traversal(root, res);
+        return res;
+    }
+    
+    private void traversal(TreeNode root, List<Integer> res) {
+        if (root == null) return;
+        res.add(root.val);
+        traversal(root.left, res);
+        traversal(root.right, res);
+    }
+}
+```
+
+#### Tic Tac Toe
+```java
+class TicTacToe {
+    private int[] rows;
+    private int[] cols;
+    private int diag;
+    private int antiDiag;
+    private int size;
+
+    /** Initialize your data structure here. */
+    public TicTacToe(int n) {
+        size = n;
+        rows = new int[n];
+        cols = new int[n];
+    }
+    
+    /** Player {player} makes a move at ({row}, {col}).
+        @param row The row of the board.
+        @param col The column of the board.
+        @param player The player, can be either 1 or 2.
+        @return The current winning condition, can be either:
+                0: No one wins.
+                1: Player 1 wins.
+                2: Player 2 wins. */
+    public int move(int row, int col, int player) {
+        int add = player == 1 ? 1 : -1;
+    
+        rows[row] += add;
+        cols[col] += add;
+        if (row == col)
+            diag += add;
+
+        if (col == (size - row - 1))
+            antiDiag += add;
+
+        if (Math.abs(rows[row]) == size || Math.abs(cols[col]) == size ||
+            Math.abs(diag) == size      || Math.abs(antiDiag) == size) {
+            return player;
+        }
+            
+        return 0;
+    }
+}
+```
+[Top](#forusall)
+
