@@ -3,6 +3,7 @@
 ## [stack](#min_stack) 
 ## [BST](#closest_binary_search_tree_value)
 ## [game](#tic_tac_toe)
+## [union find](#number_of_connected_components_in_a_undirected_graph)
 
 ### [+-()](#calculator-1) 
 ### [+-*/](#calculator-2)          
@@ -19,6 +20,7 @@
 ### [binary_tree_preorder_traversal](#binary-tree-preorder-traversal)
 ### [tic_tac_toe](#tic-tac-toe)
 ### [design_snake_game](#design-snake-game)
+### [number_of_connected_components_in_a_undirected_graph](#number-of-connected-components-in-a-undirected-graph)
 
 #### calculator 1
 `+-()`
@@ -579,4 +581,34 @@ public class SnakeGame {
 }
 ```
 [Top](#forusall)
+
+#### number of connected components in a undirected graph
+```java
+class Solution {
+    public int countComponents(int n, int[][] edges) {
+        int[] roots = new int[n];
+        for(int i = 0; i < n; i++) roots[i] = i; 
+
+        for(int[] edge : edges) {
+            int root1 = find(roots, edge[0]);
+            int root2 = find(roots, edge[1]);
+            if(root1 != root2) {      
+                roots[root1] = root2;  // union
+                n--;
+            }
+        }
+        return n;
+    }
+
+    public int find(int[] roots, int id) {
+        while(roots[id] != id) {
+            roots[id] = roots[roots[id]];  // optional: path compression
+            id = roots[id];
+        }
+        return id;
+    }
+}
+```
+[Top](#forusall)
+
 
