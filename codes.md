@@ -1,3 +1,4 @@
+# forusall
 ## [calculator](#+-())
 ## [stack](#min_stack) 
 ## [BST](#closest_binary_search_tree_value)
@@ -10,7 +11,7 @@
 ### [implement_queue_using_stacks](#implement-queue-using-stacks)
 ### [closest_binary_search_tree_value](#closest-binary-search-tree-value)
 ### [closest_binary_search_tree_value_II](#closest-binary-search-tree-value-II)
-### [insert_into_a_binary_tree](#insert-into-a-binary-tree)
+### [insert_into_a_binary_search_tree](#insert-into-a-binary-search-tree)
 ### [delete_node_in_a_BST](#delete-node-in-a-BST)
 
 #### calculator 1
@@ -48,6 +49,7 @@ class Solution {
     }
 }
 ```
+[Top](#forusall)
 
 #### calculator 2
 `+-*/`
@@ -91,6 +93,8 @@ class Solution {
     }
 }
 ```
+[Top](#forusall)
+
 #### calculator 3
 `+-*/()`
 ```java
@@ -146,6 +150,7 @@ class Solution {
     }
 }
 ```
+[Top](#forusall)
 
 #### min stack
 ```java
@@ -180,6 +185,7 @@ class MinStack {
     }
 }
 ```
+[Top](#forusall)
 
 #### max stack
 ```java
@@ -221,6 +227,7 @@ class MaxStack {
     }
 }
 ```
+[Top](#forusall)
 
 #### Implement queue using stacks
 ```java
@@ -263,6 +270,7 @@ class MyQueue {
     }
 }
 ```
+[Top](#forusall)
 
 #### Closest Binary Search Tree Value
 ```java
@@ -279,6 +287,7 @@ class Solution {
     }    
 }
 ```
+[Top](#forusall)
 
 #### Closest Binary Search Tree Value II
 ```java
@@ -305,6 +314,7 @@ class Solution {
     }
 }
 ```
+[Top](#forusall)
 
 #### Insert into a Binary Search Tree
 ```java
@@ -322,6 +332,7 @@ class Solution {
     }
 }
 ```
+[Top](#forusall)
 
 #### delete node in a BST
 ```java
@@ -353,5 +364,6 @@ class Solution {
     }
 }
 ```
+[Top](#forusall)
 
 
