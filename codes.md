@@ -8,6 +8,7 @@
 ## [bfs](#course_schedule)
 ## [excel](#excel_sheet_column_number)
 ## [random](#insert_delete_getrandom)
+## [string](#multiply_strings)
 
 ### [+-()](#calculator-1) 
 ### [+-*/](#calculator-2)          
@@ -35,6 +36,10 @@
 ### [excel_sheet_column_title](#excel-sheet-column-title)
 ### [insert_delete_getrandom](#insert-delete-getrandom)
 ### [insert_delete_getrandom_allow_duplicate](#insert-delete-getrandom-allow-duplicate)
+### [multiply_strings](#multiply-strings)
+### [Find_All_Anagrams_in_a_String](#Find-All-Anagrams-in-a-String)
+### [Group_Anagrams](#Group-Anagrams)
+### [Minimum ASCII Delete Sum](#Minimum-ASCII-Delete-Sum)
 
 #### calculator 1
 `+-()`
@@ -992,6 +997,134 @@ public class RandomizedCollection {
     /** Get a random element from the collection. */
     public int getRandom() {
         return nums.get( rand.nextInt(nums.size()) );
+    }
+}
+```
+[Top](#forusall)
+
+### Multiply Strings
+```java
+public String multiply(String num1, String num2) {
+    int m = num1.length(), n = num2.length();
+    int[] pos = new int[m + n];
+   
+    for(int i = m - 1; i >= 0; i--) {
+        for(int j = n - 1; j >= 0; j--) {
+            int mul = (num1.charAt(i) - '0') * (num2.charAt(j) - '0'); 
+            int p1 = i + j, p2 = i + j + 1;
+            int sum = mul + pos[p2];
+
+            pos[p1] += sum / 10;
+            pos[p2] = (sum) % 10;
+        }
+    }  
+    
+    StringBuilder sb = new StringBuilder();
+    for(int p : pos) if(!(sb.length() == 0 && p == 0)) sb.append(p);
+    return sb.length() == 0 ? "0" : sb.toString();
+}
+```
+[Top](#forusall)
+
+### Find All Anagrams in a String
+```java
+public class Solution {
+    public List<Integer> findAnagrams(String s, String t) {
+        List<Integer> result = new LinkedList<>();
+        if(t.length()> s.length()) return result;
+        Map<Character, Integer> map = new HashMap<>();
+        for(char c : t.toCharArray()){
+            map.put(c, map.getOrDefault(c, 0) + 1);
+        }
+        int counter = map.size();
+        
+        int begin = 0, end = 0;
+        int head = 0;
+        int len = Integer.MAX_VALUE;
+        
+        
+        while(end < s.length()){
+            char c = s.charAt(end);
+            if( map.containsKey(c) ){
+                map.put(c, map.get(c)-1);
+                if(map.get(c) == 0) counter--;
+            }
+            end++;
+            
+            while(counter == 0){
+                char tempc = s.charAt(begin);
+                if(map.containsKey(tempc)){
+                    map.put(tempc, map.get(tempc) + 1);
+                    if(map.get(tempc) > 0){
+                        counter++;
+                    }
+                }
+                if(end-begin == t.length()){
+                    result.add(begin);
+                }
+                begin++;
+            }
+            
+        }
+        return result;
+    }
+}
+```
+
+### Group Anagrams
+```java
+class Solution {
+    public List<List<String>> groupAnagrams(String[] strs) {
+        // make hashmap
+        HashMap<String, ArrayList<String>> group = new HashMap<>();
+        
+        // sort every string
+        for (String s: strs) {
+            char[] tmp = s.toCharArray();
+            Arrays.sort(tmp);
+            String key = new String(tmp);
+            if (!group.containsKey(key)) {
+                group.put(key, new ArrayList<>());
+            }
+            group.get(key).add(s);
+        }
+        
+        List<List<String>> result = new ArrayList<>();
+        // iterate through hashmap to get result
+        for (Map.Entry<String, ArrayList<String>> entry : group.entrySet()) {
+            ArrayList<String> list = entry.getValue();
+            result.add(list);
+        }
+        return result;
+        
+    }
+}
+```
+[Top](#forusall)
+
+### Minimum ASCII Delete Sum
+```java
+class Solution {
+    public int minimumDeleteSum(String s1, String s2) {
+        int m = s1.length();
+        int n = s2.length();
+        int[][] dp = new int[m+1][n+1];
+        for (int i = 0; i <= m; i++) {
+            for (int j = 0; j <= n; j++) {
+                if (i == 0 || j == 0){
+                    int num = 0;
+                    for (int z = 1; z <= Math.max(j, i); z++) {
+                        num += (i == 0 ? s2.charAt(z-1) : s1.charAt(z-1));
+                    }
+                    dp[i][j] = num;
+                } else if (s1.charAt(i-1) == s2.charAt(j-1)) {
+                    dp[i][j] = dp[i-1][j-1];
+                } else {
+                    dp[i][j] = Math.min(s1.charAt(i-1) + dp[i-1][j], s2.charAt(j-1) + dp[i][j-1]);
+                }
+            }
+        }
+        return dp[m][n];
     }
 }
 ```
