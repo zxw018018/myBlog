@@ -4,6 +4,9 @@
 ## [BST](#closest_binary_search_tree_value)
 ## [game](#tic_tac_toe)
 ## [union find](#number_of_connected_components_in_a_undirected_graph)
+## [design](#exam_room)
+## [bfs](#course_schedule)
+## [excel](#excel_sheet_column_number)
 
 ### [+-()](#calculator-1) 
 ### [+-*/](#calculator-2)          
@@ -18,11 +21,17 @@
 ### [BST_iterator](#bst-iterator)
 ### [Zigzag_iterator](#zigzag-iterator)
 ### [binary_tree_preorder_traversal](#binary-tree-preorder-traversal)
+### [count_complete_tree_nodes](#count-complete-tree-nodes)
 ### [tic_tac_toe](#tic-tac-toe)
 ### [design_snake_game](#design-snake-game)
 ### [number_of_connected_components_in_a_undirected_graph](#number-of-connected-components-in-a-undirected-graph)
 ### [graph_valid_tree](#graph-valid-tree)
 ### [exam_room](#exam-room)
+### [LRU_cache](#lru-cache)
+### [course_schedule](#course-schedule)
+### [bus_routes](#bus-routes)
+### [excel_sheet_column_number](#excel-sheet-column-number)
+### [excel_sheet_column_title](#excel-sheet-column-title)
 
 #### calculator 1
 `+-()`
@@ -468,6 +477,25 @@ class Solution {
 ```
 [Top](#forusall)
 
+### count complete tree nodes
+```java
+class Solution {
+    public int countNodes(TreeNode root) {
+        if (root == null) return 0;
+        int num = 1;
+        TreeNode left = root.left;
+        TreeNode right = root.right;
+        while (right != null) {
+            left = left.left;
+            right = right.left;
+            num = num * 2;
+        }
+        return num + (left == null ? countNodes(root.right) : countNodes(root.left));
+    }
+}
+```
+[Top](#forusall)
+
 #### Tic Tac Toe
 ```java
 class TicTacToe {
@@ -680,6 +708,196 @@ class ExamRoom {
 
     public void leave(int p) {
         students.remove(p);
+    }
+}
+```
+[Top](#forusall)
+
+### LRU cache
+```java
+class LRUCache {
+    static class Node {
+        int key;
+        int value;
+        Node prev;
+        Node next;
+        public Node (int key, int value) {
+            this.key = key;
+            this.value = value;
+        }
+    }
+    
+    private int capacity;
+    private final HashMap<Integer, Node> map;
+    private Node head;
+    private Node end;
+
+    public LRUCache(int capacity) {
+        this.capacity = capacity;
+        map = new HashMap<>();
+    }
+    
+    public int get(int key) {
+        if (map.containsKey(key)) { //key exist
+            Node n = map.get(key);
+            remove(n);
+            setHead(n);
+            return n.value;
+        } else { //key not exist
+            return -1;
+        }
+    }
+    
+    public void put(int key, int value) {
+        if (map.containsKey(key)) { //key exist
+            Node old = map.get(key);
+            old.value = value;
+            remove(old);
+            setHead(old);
+        } else { //key not exist
+            Node created = new Node(key, value);
+            if (map.size() >= capacity) { //too full
+                map.remove(end.key); //remove from hashmap
+                remove(end); //remove from linked list
+            } 
+            setHead(created);
+            map.put(key, created); //add to hashmap
+        }
+    }
+    private void remove(Node n) {
+        if (n.prev != null) {  //n is not head
+            n.prev.next = n.next;
+        } else { //n is head
+            head = n.next;
+        }
+        
+        if (n.next != null) { //n is not end
+            n.next.prev = n.prev;
+        } else { //n is end 
+            end = n.prev;
+        }
+    }
+    private void setHead(Node n) {
+        n.next = head;
+        n.prev = null;
+        if (head != null) { //head exist
+            head.prev = n;
+        }
+        head = n; 
+        if (end == null) { //end not exist
+            end = head;
+        }
+    }
+}
+```
+[Top](#forusall)
+
+### course schedule
+```java
+public class Solution {
+    public boolean canFinish(int numCourses, int[][] prerequisites) {
+        ArrayList[] graph = new ArrayList[numCourses];
+        int[] degree = new int[numCourses];
+        Queue queue = new LinkedList();
+        int count=0;
+        
+        for(int i=0;i<numCourses;i++)
+            graph[i] = new ArrayList();
+            
+        for(int i=0; i<prerequisites.length;i++){
+            degree[prerequisites[i][1]]++;
+            graph[prerequisites[i][0]].add(prerequisites[i][1]);
+        }
+        for(int i=0; i<degree.length;i++){
+            if(degree[i] == 0){
+                queue.add(i);
+                count++;
+            }
+        }
+        
+        while(queue.size() != 0){
+            int course = (int)queue.poll();
+            for(int i=0; i<graph[course].size();i++){
+                int pointer = (int)graph[course].get(i);
+                degree[pointer]--;
+                if(degree[pointer] == 0){
+                    queue.add(pointer);
+                    count++;
+                }
+            }
+        }
+        if(count == numCourses)
+            return true;
+        else    
+            return false;
+    }
+}
+```
+[Top](#forusall)
+
+### bus routes
+```java
+class Solution {
+    public int numBusesToDestination(int[][] routes, int S, int T) {
+       HashSet<Integer> visited = new HashSet<>();
+       Queue<Integer> q = new LinkedList<>();
+       HashMap<Integer, ArrayList<Integer>> map = new HashMap<>();
+       int ret = 0; 
+        
+       if (S==T) return 0; 
+        
+       for(int i = 0; i < routes.length; i++){
+            for(int j = 0; j < routes[i].length; j++){
+                ArrayList<Integer> buses = map.getOrDefault(routes[i][j], new ArrayList<>());
+                buses.add(i);
+                map.put(routes[i][j], buses);                
+            }       
+        }
+                
+       q.offer(S); 
+       while (!q.isEmpty()) {
+           int len = q.size();
+           ret++;
+           for (int i = 0; i < len; i++) {
+               int cur = q.poll();
+               ArrayList<Integer> buses = map.get(cur);
+               for (int bus: buses) {
+                    if (visited.contains(bus)) continue;
+                    visited.add(bus);
+                    for (int j = 0; j < routes[bus].length; j++) {
+                        if (routes[bus][j] == T) return ret;
+                        q.offer(routes[bus][j]);  
+                   }
+               }
+           }
+        }
+        return -1;
+    }
+}
+```
+[Top](#forusall)
+
+### excel sheet column number
+```java
+int result = 0;
+for (int i = 0; i < s.length(); result = result * 26 + (s.charAt(i) - 'A' + 1), i++);
+return result;
+```
+[Top](#forusall)
+
+### excel sheet column title
+```java
+public class Solution {
+    public String convertToTitle(int n) {
+        StringBuilder result = new StringBuilder();
+
+        while(n>0){
+            n--;
+            result.insert(0, (char)('A' + n % 26));
+            n /= 26;
+        }
+
+        return result.toString();
     }
 }
 ```
