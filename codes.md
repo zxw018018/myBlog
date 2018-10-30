@@ -10,6 +10,8 @@
 ### [implement_queue_using_stacks](#implement-queue-using-stacks)
 ### [closest_binary_search_tree_value](#closest-binary-search-tree-value)
 ### [closest_binary_search_tree_value_II](#closest-binary-search-tree-value-II)
+### [insert_into_a_binary_tree](#insert-into-a-binary-tree)
+### [delete_node_in_a_BST](#delete-node-in-a-BST)
 
 #### calculator 1
 `+-()`
@@ -303,3 +305,53 @@ class Solution {
     }
 }
 ```
+
+#### Insert into a Binary Search Tree
+```java
+class Solution {
+    public TreeNode insertIntoBST(TreeNode root, int val) {
+        if (root == null) {
+            return new TreeNode(val);
+        }
+        if (val < root.val) {
+            root.left = insertIntoBST(root.left, val);
+        } else {
+            root.right = insertIntoBST(root.right, val);
+        }
+        return root;
+    }
+}
+```
+
+#### delete node in a BST
+```java
+class Solution {
+    public TreeNode deleteNode(TreeNode root, int key) {
+        if (root == null) return null;
+
+        if (key < root.val) {
+            root.left = deleteNode(root.left, key);
+        } else if (key > root.val) {
+            root.right = deleteNode(root.right, key);
+        } else {
+            if (root.left == null) {
+                return root.right;
+            } else if (root.right == null) {
+                return root.left;
+            }
+
+            TreeNode minNode = findMin(root.right);
+            root.val = minNode.val;
+            root.right = deleteNode(root.right, root.val);
+        }
+        return root;
+    }
+    
+    private TreeNode findMin(TreeNode root) {
+        while (root.left != null) root = root.left;
+        return root;
+    }
+}
+```
+
+
